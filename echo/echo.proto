@@ -1,0 +1,20 @@
+syntax = "proto3";
+ 
+option java_package = "io.grpc.examples";
+ 
+package echo;
+
+//the echo service definition
+service Echoer{
+    rpc Echo (EchoRequest) returns (EchoReply){}
+}
+
+//the request message containing the echoMessage
+message EchoRequest{
+    string requestMessage = 1;
+}
+
+//the response message 
+message EchoReply{
+    string eplayMessage = 1;
+}
