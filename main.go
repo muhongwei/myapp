@@ -30,7 +30,7 @@ func (s *sEchoServer) Echo(stream pb.Echoer_EchoServer) error{
 			time := <-ticker.C
 			//fmt.Println(time.String())
 			var rPly pb.EchoReply
-			rPly.TimeNow = time.String()
+			rPly.TimeNow = time.Format("2006-01-02 15:04:05")
 			fmt.Println(rPly.TimeNow)
 			stream.Send(&rPly)
 		}
