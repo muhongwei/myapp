@@ -1,0 +1,24 @@
+syntax = "proto3";
+ 
+option java_multiple_files = true;
+option java_package = "streamEchoService";
+option java_outer_classname="StreamEchoProto";
+
+ 
+package streamEchoService;
+
+//the echo service definition
+service Echoer{
+    rpc Echo (stream EchoRequest) returns (stream EchoReply){}
+}
+
+//the request message containing the echoMessage
+message EchoRequest{
+    string requestMessage = 1;
+}
+
+//the response message 
+message EchoReply{
+    string eplayMessage = 1;
+    string timeNow = 2;
+}
