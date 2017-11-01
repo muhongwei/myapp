@@ -12,7 +12,8 @@ import (
 	"io"
 	//"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	pb "streamEcho/streamEcho"
+	//pb "myapp/streamEcho/streamEchoService"
+	pb "myapp/streamEcho"
 
 	//"google.golang.org/grpc/reflection"
 
@@ -26,7 +27,7 @@ func (s *sEchoServer) Echo(stream pb.Echoer_EchoServer) error{
 
 	go func(){
 		ticker := time.NewTicker(10 * time.Second)
-		for i := 0; i < 10; i++ {
+		for {
 			time := <-ticker.C
 			//fmt.Println(time.String())
 			var rPly pb.EchoReply

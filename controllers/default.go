@@ -10,7 +10,7 @@ import (
 	"net"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	pb "echo/echo"
+	pb "myapp/controllers/echo"
     
 )
 
