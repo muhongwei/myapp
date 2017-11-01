@@ -12,7 +12,7 @@ import(
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	pb "streamEcho/streamEcho"
+	pb "myapp/streamEcho"
 )
 
 var (
