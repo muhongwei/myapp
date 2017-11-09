@@ -1,9 +1,11 @@
 package main
 
 import (
+	"os"
 	"fmt"
 	_ "myapp/routers"
 	"github.com/astaxie/beego"
+	
 
 	"log"
 	"net"
@@ -21,19 +23,28 @@ import (
 
 type sEchoServer struct{}
 var (
-	port       = flag.Int("port", 10009, "The server port")
+	//port       = flag.Int("port", 10009, "The server port")
+	port=":10009"
 )
 func (s *sEchoServer) Echo(stream pb.Echoer_EchoServer) error{
+	
+	fmt.Println("start echo server")
+	var isReturnTime = true
 
 	go func(){
-		ticker := time.NewTicker(10 * time.Second)
+		ticker := time.NewTicker(20 * time.Second)
 		for {
 			time := <-ticker.C
 			//fmt.Println(time.String())
 			var rPly pb.EchoReply
 			rPly.TimeNow = time.Format("2006-01-02 15:04:05")
-			fmt.Println(rPly.TimeNow)
-			stream.Send(&rPly)
+			if isReturnTime==true{
+				fmt.Println(rPly.TimeNow)
+				stream.Send(&rPly)
+			}else{
+				break
+			}
+			
 		}
 	}()
 
@@ -42,6 +53,7 @@ func (s *sEchoServer) Echo(stream pb.Echoer_EchoServer) error{
 		fmt.Println(in)
 		if err == io.EOF{
 			fmt.Println("serverEOF")
+			isReturnTime=false
 			return nil
 		}
 		if err != nil{
@@ -58,7 +70,8 @@ func (s *sEchoServer) Echo(stream pb.Echoer_EchoServer) error{
 }
 func startEchoServer(){
 	flag.Parse()
-	lis,err := net.Listen("tcp",fmt.Sprintf("localhost:%d",*port))
+	//lis,err := net.Listen("tcp",fmt.Sprintf("localhost:%d",*port))
+	lis,err := net.Listen("tcp",port)
 	if err != nil{
 		log.Fatal("failed to listen:%v",err)
 	}
@@ -67,14 +80,29 @@ func startEchoServer(){
 	pb.RegisterEchoerServer(streamEchoServer,s)
 	streamEchoServer.Serve(lis)
 }
+func GetMyappName() string{
+	return os.Getenv("OEM")
+}
+func GetMyappVersion() string{
+	return os.Getenv("VER")
+}
 
 func main() {
 	
 	beego.BConfig.WebConfig.Session.SessionOn = true
 
+	
+	beego.SetStaticPath("/views","views")
+
+	//注册函数
+	beego.AddFuncMap("GetMyappName",GetMyappName)
+	beego.AddFuncMap("GetMyappVersion",GetMyappVersion)
+
+
 	//开启hello server
 	go startEchoServer()
 
+    
 	beego.Run()
 
 	

@@ -1,0 +1,7 @@
+<html>
+	<body>
+            appname:{{.container | GetMyappName}}
+            appversoin:{{.container | GetMyappVersion}}
+	</body>
+</html>
+

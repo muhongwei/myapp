@@ -43,6 +43,7 @@ func (main *MainController) HelloSitepoint() {
     // main.Data["Id"] = main.Ctx.Input.Param(":id")
     main.Data["UserAgent"] = main.Ctx.Request.UserAgent()
     // main.Data["domain"] = main.Ctx.Input.Domain()
+    //main.Data["IP"] = main.Ctx.Request.RemoteAddr
     main.Data["IP"] = main.Ctx.Input.IP()
     // main.Data["Header"] = main.Ctx.Request.Header
     // main.Data["GetData"] = main.Ctx.Input.GetData
@@ -57,7 +58,7 @@ func (main *MainController) HelloSitepoint() {
     }
     
 
-    main.TplName = "user/profile.tpl"
+    main.TplName = "user/appmessage.tpl"
     
 }
 func (this *MainController) EchoService(){
@@ -92,5 +93,5 @@ func (this *MainController) Test() {
         this.Data["num"] = v.(int)
     }
     //this.TplName = "index.tpl"
-    this.TplName = "user/test.tpl"
+    this.TplName = "user/login.html"
 }

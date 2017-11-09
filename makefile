@@ -14,4 +14,4 @@ BINARY_MYAPPCLI=myappcli
 all:package
 package:
         $(GOBUILD) -o $(BINARY_MYAPP) main.go  && $(GOBUILD) -o $(BINARY_MYAPPCLI) myapp-cli.go \
-        && $(DOCKERBUILD) -t myapp:2.0 .
+        && $(DOCKERBUILD) -t myapp:3.0 .
