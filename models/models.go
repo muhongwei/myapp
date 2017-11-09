@@ -15,15 +15,7 @@ type User struct {
 	UserPassword	string
 	UserIntroduction	string
 }
-
-// func getLink() beedb.Model {
-// 	db, err := sql.Open("mysql", "root:root@tcp(192.168.1.81:3306)/test_my?charset=utf8")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	orm := beedb.New(db)
-// 	return orm
-// }
+//初始化一个数据库连接
 func initMysql() *sql.DB {  
 	//打开数据库连接Open(驱动名,连接字符串)  
 	db, err := sql.Open("mysql", "root:root@tcp(192.168.34.9:3306)/myapp?charset=utf8")  
@@ -32,6 +24,7 @@ func initMysql() *sql.DB {
 	}  
 	return db  
   }
+//查找用户信息
 func FindUser(user User) *User{
 	db := initMysql()  
 	defer db.Close()
@@ -50,24 +43,18 @@ func FindUser(user User) *User{
 	return nil
 	
 }
+//将用户信息保存到数据库
 func SaveUser(user User) error {
-	//orm := getLink()
 	db := initMysql()  
     defer db.Close()
 	fmt.Println(user)
-	//err := orm.Save(&user)
 	_, err := db.Exec("insert into `myapp`.`user`(userName,userPassword,userIntroduction) values(?,?,?)", user.UserName,user.UserPassword,user.UserIntroduction)  
-    //c, _ := result.RowsAffected()  
-    //log.Println("add affected rows:", c)
 	return err
 }
-
+//验证用户信息
 func ValidateUser(user User) error {
-	//orm := getLink()
 	db := initMysql()  
 	defer db.Close()
-	//var u User
-	//orm.Where("username=? and pwd=?", user.Username, user.Pwd).Find(&u)  
     row, err := db.Query("select userName,userPassword from `myapp`.`user`")  
     if err != nil {  
         log.Fatal(err)  
