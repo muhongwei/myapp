@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"github.com/astaxie/beego"   
+	"github.com/astaxie/beego"  
+	"github.com/golang/glog" 
 	"os" 
-	"fmt"
 )
 
 
@@ -13,6 +13,11 @@ type ShowMessageController struct {
 
 
 func (c *ShowMessageController) Get() {
+	//将页面和接口调用对应的客户端ip和UserAgent信息作为日志打印到标准控制台
+	glog.Infoln("showMessage Get():")
+	glog.Infoln("userip:",c.Ctx.Input.IP())
+	glog.Infoln("useragent:",c.Ctx.Request.UserAgent())
+
 	sess := c.StartSession()
 	// c.Data["UserAgent"] = sess.Get("useragent")
 	// c.Data["IP"] = sess.Get("ip")
@@ -21,7 +26,7 @@ func (c *ShowMessageController) Get() {
 	c.Data["IP"] = c.Ctx.Input.IP()
 	host, err := os.Hostname()
     if err != nil {
-        fmt.Printf("%s", err)
+        glog.Infof("%s", err)
     } else {
         c.Data["HostName"] = host
 	}

@@ -1,8 +1,8 @@
 <header class="hero-unit">
 
-    <div style="background-color:rgb(255, 255, 255);float:right;margin-top:0px;">
-    myappversion:{{.container | GetMyappVersion}}<br>
-    myappname:{{.container | GetMyappName}}
+    <div style="float:right;margin-top:0px;font-size:24px">
+        myappversion:{{.container | GetMyappVersion}}<br>
+        myappname:{{.container | GetMyappName}}
     </div>
     
 

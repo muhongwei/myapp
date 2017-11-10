@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
-	"log"
+	"github.com/golang/glog"
 	//"github.com/astaxie/beedb"
 	_ "github.com/Go-SQL-Driver/MySQL" 
 )
@@ -18,9 +18,9 @@ type User struct {
 //初始化一个数据库连接
 func initMysql() *sql.DB {  
 	//打开数据库连接Open(驱动名,连接字符串)  
-	db, err := sql.Open("mysql", "root:root@tcp(192.168.34.9:3306)/myapp?charset=utf8")  
+	db, err := sql.Open("mysql", "root:rootmhw12345@tcp(192.168.34.8:3306)/myapp?charset=utf8")  
 	if err != nil {  
-		log.Fatal(err)  
+		glog.Fatalln(err)  
 	}  
 	return db  
   }
@@ -30,7 +30,7 @@ func FindUser(user User) *User{
 	defer db.Close()
 	row, err := db.Query("select * from `myapp`.`user`")  
     if err != nil {  
-        log.Fatal(err)  
+        glog.Fatalln(err)  
     }  
     var user1 User  
     for row.Next() {  
@@ -57,7 +57,7 @@ func ValidateUser(user User) error {
 	defer db.Close()
     row, err := db.Query("select userName,userPassword from `myapp`.`user`")  
     if err != nil {  
-        log.Fatal(err)  
+        glog.Fatalln(err)  
     }  
     var name string = ""      
     var password string = ""  

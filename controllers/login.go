@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	"github.com/golang/glog"
 	"github.com/astaxie/beego"
 	"myapp/models"
 
@@ -14,6 +14,12 @@ type IndexController struct {
 }
 
 func (index *IndexController) Get() {
+
+	//将页面和接口调用对应的客户端ip和UserAgent信息作为日志打印到标准控制台
+	glog.Infoln("login Get():")
+	glog.Infoln("userip:",index.Ctx.Input.IP())
+	glog.Infoln("useragent:",index.Ctx.Request.UserAgent())
+
 	//查看session中是否存储有用户登录信息，若没有，进入登录页面，否则进入信息显示页面
 	sess := index.StartSession()
 	username := sess.Get("username")
@@ -26,6 +32,11 @@ func (index *IndexController) Get() {
 }
 
 func (index *IndexController) Post() {
+	//将页面和接口调用对应的客户端ip和UserAgent信息作为日志打印到标准控制台
+	glog.Infoln("login Post():")
+	glog.Infoln("userip:",index.Ctx.Input.IP())
+	glog.Infoln("useragent:",index.Ctx.Request.UserAgent())
+
 	//新建一个session存储用户信息	
 	sess := index.StartSession()
 	//新建models.User类型变量来储存用户登录信息
@@ -45,9 +56,9 @@ func (index *IndexController) Post() {
 	if err == nil {
 
 		//记录用户登录信息
-		fmt.Println("username:",user.UserName)
-		fmt.Println("userpassword:",user.UserPassword)
-		fmt.Println("login success")
+		glog.Infoln("username:",user.UserName)
+		glog.Infoln("userpassword:",user.UserPassword)
+		glog.Infoln("login success")
 
 		//如果登录成功，将用户名和已经通过md5加密的密码存入session
 		sess.Set("username", user.UserName)
@@ -62,9 +73,9 @@ func (index *IndexController) Post() {
 		index.Redirect("/user/profile",302)
 	} else {
 		//记录用户登录信息
-		fmt.Println("username:",user.UserName)
-		fmt.Println("userpassword:",user.UserPassword)
-		fmt.Println("login failed")
+		glog.Infoln("username:",user.UserName)
+		glog.Infoln("userpassword:",user.UserPassword)
+		glog.Infoln("login failed")
 		index.TplName = "error.tpl"
 	}
 }
