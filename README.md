@@ -23,16 +23,16 @@
 ### myapp部署方法
 编写dockerfile和makefiel文件，在linux环境makefile同级目录执行make package对代码进行进行build生成可执行的二进制文件并通过dockerfile打包成镜像。执行ecos平台上上传镜像的代码将镜像上传到ecos平台。
 进入ecos平台进入镜像管理可以查看已经拥有的镜像列表，点击添加镜像可以弹出三种不同的添加方法，上一步是在在linux平台上的centos虚拟机进行的为第三种添加方法。 
-在ecos平台进入应用管理模块点击添加应用，设置应用的称和应用描述。点击应用，添加服务设置相应的信息，点击下一步进入如下所示界面：定义容器和服务的端口映射<br>
- ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappPort.png)<br>
-点击下一步，设置容器运行的名称，已经前面上次的镜像。我的应用需要加启动命令：./myapp -logtostderr=true。可以在此处设置环境变量。我添加了三个环境变量：OEM,VER,GO15VENDOREXPERIMENT。OEM定义软件的名字，VER定义软件的版本号，GO15VENDOREXPERIMENT是govendor所需要的环境变量，值为1。如下图所示：<br>
-  图片<br>
+在ecos平台进入应用管理模块点击添加应用，设置应用的名称和应用描述。点击应用，添加服务设置相应的信息，点击下一步进入如下所示界面：定义容器和服务的端口映射
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappPort.png)<br>
+点击下一步，设置容器运行的名称，设置前面上传的镜像。我的应用需要加启动命令：./myapp -logtostderr=true。可以在此处设置环境变量。我添加了三个环境变量：OEM,VER,GO15VENDOREXPERIMENT。OEM定义软件的名字，VER定义软件的版本号，GO15VENDOREXPERIMENT是govendor所需要的环境变量，值为1。如下图所示：
 点击下一步，添加。
+<br>![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappConfig.png)<br>
 ### mysql部署方法
 首先新建一台虚拟机作为nfs挂载的服务端配置nfs挂载相关设置，在ecos中储存模块将nfs主机添加上去。
 通过docker pull mysql将mysql镜像拉取到本地，并通过上述方法将镜像上传到ecos。类似的添加应用和服务。在基础设置那里需要将服务状态设置为不共享磁盘，容器配置那里需要添加环境变量MYSQL_ROOT_PASSWORD初始化mysql的root账户密码，以及添加网络挂载卷。
 ### 添加负载均衡
-在应用管理模块下有一个负载均衡模块，可以在此处添加转发规则将集群内部的端口映射到某一台主机上，我的设置如下图：<br>
-  图片<br>
+在应用管理模块下有一个负载均衡模块，可以在此处添加转发规则将集群内部的端口映射到某一台主机上，我的设置如下图：
+<br>![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappser.png)<br>
 接下来就可以通过负载均衡生成的网址访问myapp了。
 ## 遇到的问题和解决方法
