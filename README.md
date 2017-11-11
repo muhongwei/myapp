@@ -2,14 +2,18 @@
 ## 功能介绍
 ### 用户登录
 用户通过输出用户名和密码点击SIGN_IN进行登录，如果用户是新用户，可以点击new user and I want to regist进入注册页面进行注册。如果输入的用户名或者密码不正确，页面会跳转至错误页面提示err并在三秒后返回到登录页面。
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/login.png)<br>
 ### 用户注册
 用户通过输入用户名，密码和自我介绍进行注册。注册成功后页面会跳转是登录界面，用户输入注册的用户名和密码进行登录。如果注册失败，页面会跳转至错误页面提示err并在三秒后返回登录页面。
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/regist.png)<br>
 ### 用户登录信息显示
 用户通过输入正确的用户名和密码进入用户登录信息显示页面。页面中会显示访问用户的useragent信息，访问用户的ip信息，服务端主机名，访问用户的名字，访问用户的自我介绍。
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/showInfo.png)<br>
 ### 产品名称和版本号信息显示在每一个页面
 在用户登录页面，用户注册页面以及用户登录信息显示页面均通过调用模板函数在页面右上角显示应用名称和版本号。
 ### echo命令行服务
 通过客服端访问服务端grpc开放的端口来实现echo服务。连接成功后会提示“输入exit退出：”信息。之后通过客服端输入信息与服务端交互返回客服端输入信息，并且服务端会在连接建立之后每20秒主动推送当前时间到客服端并显示出来。
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/client.png)<br>
 ## 接口说明
 ### grpc接口调用
 在实现命令行echo服务的时候调用的grpc的接口，通过grpc.NewServer()来新建一个grpc服务，随时监听端口号的连接。
