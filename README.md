@@ -11,6 +11,7 @@
 <br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/showInfo.png)<br>
 ### 产品名称和版本号信息显示在每一个页面
 在用户登录页面，用户注册页面以及用户登录信息显示页面均通过调用模板函数在页面右上角显示应用名称和版本号。
+<br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/version.png)<br>
 ### echo命令行服务
 通过客服端访问服务端grpc开放的端口来实现echo服务。连接成功后会提示“输入exit退出：”信息。之后通过客服端输入信息与服务端交互返回客服端输入信息，并且服务端会在连接建立之后每20秒主动推送当前时间到客服端并显示出来。
 <br> ![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/client.png)<br>
