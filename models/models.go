@@ -18,7 +18,7 @@ type User struct {
 //初始化一个数据库连接
 func initMysql() *sql.DB {  
 	//打开数据库连接Open(驱动名,连接字符串)  
-	db, err := sql.Open("mysql", "root:rootmhw12345@tcp(192.168.34.8:3306)/myapp?charset=utf8")  
+	db, err := sql.Open("mysql", "root:rootmhw12345@tcp(192.168.34.153:3306)/myapp?charset=utf8")  
 	if err != nil {  
 		glog.Fatalln(err)  
 	}  
