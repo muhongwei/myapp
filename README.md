@@ -37,3 +37,6 @@
 <br>![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappser.png)<br>
 接下来就可以通过负载均衡生成的网址访问myapp了。
 ## 4遇到的问题和解决方法
+### 4.1日志激活
+问题：日志激活提示未知错误<br>
+解决方法:查看日志监控安装配置需求知道--Elasticsearch 配置需求内存：最优64G(ES 32g，Lucene 32G) ,生产中通常情况下是32G和16G， 不得低于8G，因为新建的虚拟机内存默认为4G，求助大神修改loging.yaml文件将内存设置为4G，未知错误消失。日志正常输出。
