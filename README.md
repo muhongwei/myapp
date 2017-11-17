@@ -18,7 +18,7 @@
 ## 2接口说明
 ### 2.1grpc接口调用
 在实现命令行echo服务的时候调用的grpc的接口，通过grpc.NewServer()来新建一个grpc服务，随时监听端口号的连接。
-### 2.2ysql接口调用
+### 2.2mysql接口调用
 通过导入_ "github.com/Go-SQL-Driver/MySQL" 驱动，在beego框架models模块建立数据库连接，和sql命令执行查询操作远程数据库。
 ## 3部署方法
 ### 3.1myapp部署方法
@@ -36,7 +36,41 @@
 在应用管理模块下有一个负载均衡模块，可以在此处添加转发规则将集群内部的端口映射到某一台主机上，我的设置如下图：
 <br>![Image text]( https://github.com/muhongwei/myapp/blob/master/static/picture/myappser.png)<br>
 接下来就可以通过负载均衡生成的网址访问myapp了。
+### 3.4日志监控激活
+需要为日志和监控新建两台虚拟机，将虚拟机添加到集群中<br>
+> * 日志服务激活：<br>
+>> 在master结点执行以下命令将结点主机进行污点标记专门为日志插件服务
+
+```
+* nodex 表示要分配的节点
+* 在master节点下执行如下命令 
+>kubectl label nodes nodeX ekos.ghostcloud.cn/label-role=logging    
+>kubectl taint nodes nodeX ekos.ghostcloud.cn/taint-role=logging:NoExecute
+```
+>> 登录到nodex执行以下命令<br>
+```
+> mkdir /data
+> chmod 777 /data
+
+* nodeX 系统参数设置
+> ulimit -n unlimited
+> ulimit -l unlimited
+> ulimit -s unlimited
+```
+>> 在ecos中点击激活进行激活<br>
+
+> * 监控服务激活
+>> 在master节点下执行如下命令
+```
+> kubectl label  nodes nodeX ekos.ghostcloud.cn/label-role=monitor
+> kubectl taint nodes nodeX ekos.ghostcloud.cn/taint-role=monitor:NoExecute
+ * nodex 表示要分配的节点
+```
 ## 4遇到的问题和解决方法
-### 4.1日志激活
-问题：日志激活提示未知错误<br>
-解决方法:查看日志监控安装配置需求知道--Elasticsearch 配置需求内存：最优64G(ES 32g，Lucene 32G) ,生产中通常情况下是32G和16G， 不得低于8G，因为新建的虚拟机内存默认为4G，求助大神修改loging.yaml文件将内存设置为4G，未知错误消失。日志正常输出。
+### 4.1浏览镜像仓库列表
+> * 问题：在ecos中镜像列表刷新不出来<br>
+> * 解决方法：将ceph安装在一台独立的主机上
+### 4.2日志激活
+> * 问题：日志激活提示未知错误<br>
+> * 解决方法:查看日志监控安装配置需求知道--Elasticsearch 配置需求内存：最优64G(ES 32g，Lucene 32G) ,生产中通常情况下是32G和16G， 不得低于8G，因为新建的虚拟机内存默认为4G，求助大神修改loging.yaml文件将内存设置为4G，未知错误消失。日志正常输出。但是这种解决方法存在很大问题，只能满足浏览日志的需求，对日志进行操作会存在很大问题，最好的方法是新建一台内存大于8G的虚拟机来提供日志监控服务。
+
